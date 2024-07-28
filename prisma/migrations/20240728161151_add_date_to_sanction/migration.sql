@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `sanction` ADD COLUMN `date` VARCHAR(191) NOT NULL DEFAULT '28.07.2024';

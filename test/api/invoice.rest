@@ -1,0 +1,54 @@
+@host = http://localhost:3000/api
+
+# Create a new invoice
+POST {{host}}/invoices
+Content-Type: application/json
+
+{
+  "clientName": "John Doe",
+  "kid": "12345678",
+  "control_number": "87654321",
+  "total_charge": 500.00,
+  "due_date": "2024-12-31",
+  "plate_number": "ABC-1234",
+  "violated_at": "2024-07-01",
+  "rules": [
+    "Avgiftsparkering - Billett / elektronisk registrering utløpt - pforskr.§31(2)",
+    "Avgiftsparkering - Gyldig billett ikke synlig i frontruten / ingen gyldig elektronisk registrering funnet - pforskr.§31(2)"
+  ]
+}
+
+###
+
+# Retrieve all invoices
+GET {{host}}/invoices
+
+###
+
+# Retrieve a specific invoice by ID
+GET {{host}}/invoices/1
+
+###
+
+# Update an existing invoice
+PUT {{host}}/invoices/1
+Content-Type: application/json
+
+{
+  "clientName": "Jane Doe",
+  "kidNumber": "87654321",
+  "controlNumber": "12345678",
+  "totalCharge": 600.00,
+  "dueDate": "2025-01-31",
+  "plateNumber": "XYZ-9876",
+  "violatedAt": "2024-08-01",
+  "rules": [
+    "Avgiftsparkering - Billett / elektronisk registrering utløpt - pforskr.§31(2)",
+    "Avgiftsparkering - Gyldig billett ikke synlig i frontruten / ingen gyldig elektronisk registrering funnet - pforskr.§31(2)"
+  ]
+}
+
+###
+
+# Delete an invoice
+DELETE {{host}}/invoices/1
