@@ -16,13 +16,24 @@ datasource db {
 enum DebtStatus {
   paid
   not_paid
+  sent_to_debt_collect
 }
+
+model SanctionRule {
+  id Int @id @default(autoincrement())
+  sanction_id Int
+  sanction Sanction @relation(fields: [sanction_id], references: [id])
+
+  name String
+  charge Float
+}
+
 
 model Sanction {
   id Int @id @default(autoincrement())
-  // control_number String
-  // kid_number String
-  // charge Float
+  control_number String
+  kid_number String
+  total_charge Float
   due_date String
   employee_pnid String
   status DebtStatus @default(not_paid)
@@ -31,6 +42,7 @@ model Sanction {
   payment Payment?
   invoice Invoice?
   sanction_files SanctionFile[]
+  sanction_rules SanctionRule[]
 
   created_at String
   date String
@@ -96,26 +108,12 @@ enum InvoiceStatus {
   pending
 }
 
-model InvoiceRule {
-  id Int @id @default(autoincrement())
-  invoice_id Int
-  invoice Invoice @relation(fields: [invoice_id], references: [id])
-
-  name String
-  charge Float
-}
-
 model Invoice {
   id Int @id @default(autoincrement())
-  kid_number String
-  control_number String
-  total_charge Float
   status InvoiceStatus
 
   invoice_file String
   created_at String
-
-  rules InvoiceRule[]
 
   sanction_id Int? @unique
   sanction Sanction? @relation(fields: [sanction_id], references: [id])

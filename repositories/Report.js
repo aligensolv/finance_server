@@ -86,6 +86,19 @@ class ReportRepository {
             }
         )
     )
+
+    static getTotalRevenue = async () => new Promise(
+        promiseAsyncWrapper(
+            async (resolve, reject) => {
+                const total_income = await this.prisma.payment.aggregate({
+                    _sum: {
+                        paid_amount: true
+                    }
+                })
+                resolve(total_income._sum.paid_amount)
+            }
+        )
+    )
 }
 
 export default ReportRepository

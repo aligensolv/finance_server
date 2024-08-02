@@ -1,5 +1,5 @@
 import { Router } from "express"
-import { addSanctionFiles, addSanctionFilesUsingControlNumber, createSanction, deleteAllSanctionFiles, deleteSanction, deleteSanctionFile, getDeletedSanctions, getSanctionFiles, getSanctions } from "../controllers/sanction_controller.js"
+import { addSanctionFiles, addSanctionFilesUsingControlNumber, createSanction, deleteAllSanctionFiles, deleteSanction, deleteSanctionFile, getDeletedSanctions, getSanctionFiles, getSanctions, markSanctionAsPaid, sendSanctionToDebtCollect } from "../controllers/sanction_controller.js"
 import multer from "multer"
 import Randomstring from "randomstring"
 
@@ -21,7 +21,9 @@ router.post('/sanctions', createSanction)
 router.get('/sanctions', getSanctions)
 router.get('/sanctions/deleted', getDeletedSanctions)
 
-router.put('/controls/:id', getSanctionFiles)
+router.post('/sanctions/:id/payment', markSanctionAsPaid)
+router.post('/sanctions/:id/debt-collect', sendSanctionToDebtCollect)
+
 
 
 router.delete('/sanctions/:id', deleteSanction)

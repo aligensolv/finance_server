@@ -30,7 +30,8 @@ export const createSanction = asyncWrapper(
             control_number,
             total_charge,
             violated_at,
-            employee_pnid
+            employee_pnid,
+            rules
         })
 
         const new_sanction = await SanctionRepository.createSanction({
@@ -39,16 +40,7 @@ export const createSanction = asyncWrapper(
             total_charge,
             employee_pnid,
             violated_at,
-            rules: [
-                {
-                    name: '1 - Avgiftsparkering - Billett / elektronisk registrering utløpt - pforskr.§31(2)',
-                    charge: 660
-                },
-                {
-                    name: '2 - Avgiftsparkering - Gyldig billett ikke synlig i frontruten / ingen gyldig elektronisk registrering funnet - pforskr.§31(2)',
-                    charge: 660
-                }
-            ]
+            rules
         })
 
         io.emit(
@@ -154,5 +146,26 @@ export const getDeletedSanctions = asyncWrapper(
     async (req,res) => {
         const sanctions = await SanctionRepository.getDeletedSanctions()
         res.status(OK).json(sanctions)
+    }
+)
+
+export const markSanctionAsPaid = asyncWrapper(
+    async (req,res) => {
+        const { id } = req.params
+        const updated_sanction = await SanctionRepository.markSanctionAsPaid({
+            id
+        })
+        res.status(OK).json(updated_sanction)
+    }
+)
+
+
+export const sendSanctionToDebtCollect = asyncWrapper(
+    async (req,res) => {
+        const { id } = req.params
+        const updated_sanction = await SanctionRepository.sendSanctionToDebtCollect({
+            id
+        })
+        res.status(OK).json(updated_sanction)
     }
 )

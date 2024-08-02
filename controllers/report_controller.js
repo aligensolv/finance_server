@@ -30,3 +30,10 @@ export const deleteReport = asyncWrapper(
         res.status(OK).json(report)
     }
 )
+
+export const getTotalRevenue = asyncWrapper(
+    async (req, res) => {
+        const total_income = await ReportRepository.getTotalRevenue()
+        res.status(OK).json(total_income)
+    }
+)

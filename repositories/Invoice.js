@@ -28,20 +28,14 @@ class InvoiceRepository {
         })
     )
 
-    static createInvoice = async ({ kid_number, control_number, total_charge, rules, sanction_id }) => new Promise(
+    static createInvoice = async ({ sanction_id }) => new Promise(
         promiseAsyncWrapper(async (resolve, reject) => {
             const invoice_file = await InvoiceHelperRepository.generateInvoiceFile({})
 
             const invoice = await this.prisma.invoice.create({
                 data: {
-                    kid_number,
-                    control_number,
                     sanction_id: +sanction_id,
-                    total_charge: +total_charge,
                     invoice_file,
-                    rules: {
-                        create: rules
-                    },
                     created_at: TimeRepository.getCurrentDateTime(),
                     status: 'pending'
                 }

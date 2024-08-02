@@ -12,13 +12,13 @@ class SanctionRepository {
                 where: {
                     deleted_at: null
                 },
+                orderBy: {
+                    created_at: 'desc'
+                },
                 include: {
-                    invoice: {
-                        include: {
-                            rules: true
-                        }
-                    },
+                    sanction_rules: true,
                     sanction_files: true,
+                    payment: true
                 }
             })
             resolve(sanctions)
@@ -33,13 +33,13 @@ class SanctionRepository {
                         not: null
                     }
                 },
+                orderBy: {
+                    created_at: 'desc'
+                },
                 include: {
-                    invoice: {
-                        include: {
-                            rules: true
-                        }
-                    },
-                    sanction_files: true
+                    sanction_rules: true,
+                    sanction_files: true,
+                    payment: true
                 }
             })
             resolve(sanctions)
@@ -51,6 +51,10 @@ class SanctionRepository {
             const sanction = await this.prisma.sanction.findUnique({
                 where: {
                     id: +id
+                },
+                include: {
+                    sanction_rules: true,
+                    sanction_files: true
                 }
             })
             resolve(sanction)
@@ -64,18 +68,20 @@ class SanctionRepository {
                     employee_pnid, 
                     created_at: TimeRepository.getCurrentDateTime(),
                     date: TimeRepository.getCurrentDate(),
+                    kid_number,
+                    control_number,
+                    total_charge: +total_charge,
                     due_date: TimeRepository.increaseTimeByWeeks({
                         current_time: violated_at,
                         weeks: 3
                     }),
+                    sanction_rules: {
+                        create: rules
+                    }
                 }
             })
 
-            const invoice = await InvoiceRepository.createInvoice({
-                kid_number,
-                control_number,
-                total_charge,
-                rules,
+            await InvoiceRepository.createInvoice({
                 sanction_id: sanction.id
             })
 
@@ -84,12 +90,7 @@ class SanctionRepository {
                     id: sanction.id
                 },
                 include: {
-                    invoice: {
-                        include: {
-                            rules: true
-                        }
-                    },
-
+                    sanction_rules: true,
                     sanction_files: true
                 }
             })
@@ -119,6 +120,46 @@ class SanctionRepository {
                 }
             })
             resolve(deleted_sanction)
+        })
+    )
+
+    static markSanctionAsPaid = async ({ id }) => new Promise(
+        promiseAsyncWrapper(async (resolve, reject) => {
+            const updated_sanction = await this.prisma.sanction.update({
+                where: {
+                    id: +id
+                },
+                data: {
+                    status: 'paid'
+                }
+            })
+
+            await this.prisma.payment.create({
+                data: {
+                    client_name: 'John Doe',
+                    plate_number: 'ABC-123',
+                    charged_at: updated_sanction.created_at,
+                    paid_amount: updated_sanction.total_charge,
+                    paid_at: TimeRepository.getCurrentDateTime(),
+                    control_number: updated_sanction.control_number,
+                    sanction_id: updated_sanction.id
+                }
+            })
+            resolve(updated_sanction)
+        })
+    )
+
+    static sendSanctionToDebtCollect = async ({ id }) => new Promise(
+        promiseAsyncWrapper(async (resolve, reject) => {
+            const updated_sanction = await this.prisma.sanction.update({
+                where: {
+                    id: +id
+                },
+                data: {
+                    status: 'sent_to_debt_collect'
+                }
+            })
+            resolve(updated_sanction)
         })
     )
 }
