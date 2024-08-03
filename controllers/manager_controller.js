@@ -60,6 +60,7 @@ export const createManager = asyncWrapper(
 export const verifyManagerToken = asyncWrapper(
     async (req,res) => {
         const { token } = req.body
+        console.log(token);
 
         if(!token){
             return res.status(NOT_AUTHORIZED).json({
