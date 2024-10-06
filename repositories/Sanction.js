@@ -129,6 +129,9 @@ class SanctionRepository {
                 where: {
                     id: +id
                 },
+                include: {
+                    i
+                },
                 data: {
                     status: 'paid'
                 }
@@ -137,7 +140,7 @@ class SanctionRepository {
             await this.prisma.payment.create({
                 data: {
                     client_name: 'John Doe',
-                    plate_number: 'ABC-123',
+                    plate_number: updated_sanction.plate_number,
                     charged_at: updated_sanction.created_at,
                     paid_amount: updated_sanction.total_charge,
                     paid_at: TimeRepository.getCurrentDateTime(),

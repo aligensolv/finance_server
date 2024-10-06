@@ -36,27 +36,26 @@ class SanctionFileRepository {
 
     static addSanctionFilesUsingControlNumber = async ({ files, control_number }) => new Promise(
         promiseAsyncWrapper(async (resolve, reject) => {
-            const invoice = await this.prisma.invoice.findFirst({
+            const sanction = await this.prisma.sanction.findFirst({
                 where: {
-                    control_number
+                    control_number: control_number
                 }
             })
             
-            if (!invoice) {
-                const no_invoice_found  = new CustomError(
-                    "Invoice not found",
+            if (!sanction) {
+                const no_sanction_found  = new CustomError(
+                    "Sanction not found",
                     NOT_FOUND
                 )
 
-                return reject(no_invoice_found)
+                return reject(no_sanction_found)
             }
-            console.log(invoice);
 
             const newFiles = await this.prisma.sanctionFile.createMany({
                 data: files.map((file) => {
                     return {
                         ...file,
-                        sanction_id: +invoice.sanction_id,
+                        sanction_id: sanction.id,
                         uploaded_at: TimeRepository.getCurrentDateTime(),
                         uploaded_by_id: 1
                     }
