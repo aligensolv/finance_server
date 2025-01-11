@@ -1,5 +1,5 @@
 import { Router } from "express"
-import { addSanctionFiles, addSanctionFilesUsingControlNumber, createSanction, deleteAllSanctionFiles, deleteSanction, deleteSanctionFile, getDeletedSanctions, getSanctionFiles, getSanctions, markSanctionAsPaid, sendSanctionToDebtCollect } from "../controllers/sanction_controller.js"
+import { addSanctionFiles, addSanctionFilesUsingControlNumber, completeSanctionByKidNumber, createSanction, deleteAllSanctionFiles, deleteSanction, deleteSanctionFile, getDeletedSanctions, getSanctionFiles, getSanctions, markSanctionAsPaid, sendSanctionToDebtCollect } from "../controllers/sanction_controller.js"
 import multer from "multer"
 import Randomstring from "randomstring"
 
@@ -34,5 +34,7 @@ router.post('/sanctions/:id/files',upload.array('attachments[]'),addSanctionFile
 router.delete('/sanctions/:id/files/:file_id', deleteSanctionFile)
 router.delete('/sanctions/:id/files', deleteAllSanctionFiles)
 router.get('/sanctions/:id/files', getSanctionFiles)
+
+router.post('/sanctions/kid/:id', completeSanctionByKidNumber)
 
 export default router

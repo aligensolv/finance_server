@@ -169,3 +169,13 @@ export const sendSanctionToDebtCollect = asyncWrapper(
         res.status(OK).json(updated_sanction)
     }
 )
+
+export const completeSanctionByKidNumber = asyncWrapper(
+    async (req,res) => {
+        const { id: kid_number } = req.params
+        const updated_sanction = await SanctionRepository.completeSanctionByKidNumber({
+            kid_number
+        })
+        res.status(OK).json(updated_sanction)
+    }
+)

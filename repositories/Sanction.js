@@ -165,6 +165,20 @@ class SanctionRepository {
             resolve(updated_sanction)
         })
     )
+
+    static completeSanctionByKidNumber = async ({ kid_number }) => new Promise(
+        promiseAsyncWrapper(async (resolve, reject) => {
+            const updated_sanction = await this.prisma.sanction.update({
+                where: {
+                    kid_number
+                },
+                data: {
+                    status: 'paid'
+                }
+            })
+            resolve(updated_sanction)
+        })
+    )
 }
 
 export default SanctionRepository

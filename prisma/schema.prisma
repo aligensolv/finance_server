@@ -9,7 +9,7 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "postgres"
   url      = env("DATABASE_URL")
 }
 
@@ -32,7 +32,7 @@ model SanctionRule {
 model Sanction {
   id Int @id @default(autoincrement())
   control_number String
-  kid_number String
+  kid_number String @unique
   total_charge Float
   due_date String
   employee_pnid String

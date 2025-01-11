@@ -70,9 +70,8 @@ app.use(
     SanctionRoute,
     ManagerRoute,
     StatisticsRoute,
-    ReportRoute
+    ReportRoute,
 )
-
 
 app.use(ErrorHandlerMiddleware)
 
