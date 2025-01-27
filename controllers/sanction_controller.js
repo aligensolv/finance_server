@@ -5,6 +5,7 @@ import SanctionRepository from "../repositories/Sanction.js"
 import SanctionFileRepository from "../repositories/SanctionFile.js"
 import ValidatorRepository from "../repositories/Validator.js"
 import { io } from "../server.js"
+import PrismaClientService from "../utils/prisma_client.js"
 
 export const getSanctions = asyncWrapper(
     async (req,res) => {
@@ -33,6 +34,19 @@ export const createSanction = asyncWrapper(
             employee_pnid,
             rules
         })
+
+        const find_if_sanction_exists = await PrismaClientService.instance.sanction.findFirst({
+            where: {
+                kid_number: kid_number,
+                control_number: control_number
+            }
+        })
+
+        if (find_if_sanction_exists) {
+            return res.status(400).json({
+                message: 'Sanction already exists'
+            })
+        }
 
         const new_sanction = await SanctionRepository.createSanction({
             kid_number,

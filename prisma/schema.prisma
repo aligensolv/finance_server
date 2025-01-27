@@ -84,10 +84,6 @@ model FinancialReport {
   deleted_at String?
 }
 
-enum FileType {
-  pdf
-  image
-}
 
 model Payment {
   id Int @id @default(autoincrement())
