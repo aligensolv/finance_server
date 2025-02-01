@@ -1950,3 +1950,17 @@ Invalid `prisma.payment.create()` invocation:
 Unique constraint failed on the constraint: `Payment_sanction_id_key` {"timestamp":"2024-08-01 22:25:14"}
 [31merror[39m: OK is not defined {"timestamp":"2025-01-08 18:24:12"}
 [31merror[39m: OK is not defined {"timestamp":"2025-01-08 18:24:12"}
+[31merror[39m: invalid signature {"timestamp":"2025-02-01 11:44:38"}
+[31merror[39m: invalid signature {"timestamp":"2025-02-01 11:44:38"}
+[31merror[39m: 
+Invalid `prisma.manager.findFirst()` invocation:
+
+
+Database `sjekk_finance` does not exist on the database server at `localhost:5432`. {"timestamp":"2025-02-01 11:46:23"}
+[31merror[39m: 
+Invalid `prisma.manager.findFirst()` invocation:
+
+
+Database `sjekk_finance` does not exist on the database server at `localhost:5432`. {"timestamp":"2025-02-01 11:46:23"}
+[31merror[39m: [object Object],[object Object],[object Object] {"timestamp":"2025-02-01 11:48:01"}
+[31merror[39m: [object Object],[object Object],[object Object] {"timestamp":"2025-02-01 11:48:01"}

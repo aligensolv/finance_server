@@ -242,3 +242,9 @@
 {"level":"error","message":"\nInvalid `prisma.payment.create()` invocation:\n\n\nUnique constraint failed on the constraint: `Payment_sanction_id_key`","timestamp":"2024-08-01 22:25:14"}
 {"level":"error","message":"OK is not defined","timestamp":"2025-01-08 18:24:12"}
 {"level":"error","message":"OK is not defined","timestamp":"2025-01-08 18:24:12"}
+{"level":"error","message":"invalid signature","timestamp":"2025-02-01 11:44:38"}
+{"level":"error","message":"invalid signature","timestamp":"2025-02-01 11:44:38"}
+{"level":"error","message":"\nInvalid `prisma.manager.findFirst()` invocation:\n\n\nDatabase `sjekk_finance` does not exist on the database server at `localhost:5432`.","timestamp":"2025-02-01 11:46:23"}
+{"level":"error","message":"\nInvalid `prisma.manager.findFirst()` invocation:\n\n\nDatabase `sjekk_finance` does not exist on the database server at `localhost:5432`.","timestamp":"2025-02-01 11:46:23"}
+{"level":"error","message":[{"error":"name cannot be null or empty","field":"name"},{"error":"username cannot be null or empty","field":"username"},{"error":"linked_email cannot be null or empty","field":"linked_email"}],"timestamp":"2025-02-01 11:48:01"}
+{"level":"error","message":[{"error":"name cannot be null or empty","field":"name"},{"error":"username cannot be null or empty","field":"username"},{"error":"linked_email cannot be null or empty","field":"linked_email"}],"timestamp":"2025-02-01 11:48:01"}
